@@ -1,4 +1,5 @@
  function scores = vectorized_multiobjective(pop)
+ pop
      popSize = size(pop,1); % Population size
      numObj = 2;  % Number of objectives
      % initialize scores

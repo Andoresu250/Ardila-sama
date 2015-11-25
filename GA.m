@@ -24,23 +24,29 @@ for count1=1:cities,
         distances(count2,count1)=distances(count1,count2);
     end;
 end;
-%Generar matriz tiempo (RANDOM)
-times = zeros(cities);
-for count1=1:cities,
-    for count2=1:count1,
-        if count1 ~= count2
-            times(count1,count2)=rand*100;
-            times(count2,count1)=times(count1,count2);
-        end;
-    end;
-end;
+%Generar matriz tiempo (RANDOM) 
 
-FitnessFunction = @(x) traveling_salesman_fitness(x,distances,times);
-options = gaoptimset('Vectorized','on');
+%%Univariable
+times = textread('tiempos.txt');
+
+FitnessFcn = @(x) traveling_salesman_fitness(x,distances);
+
+my_plot = @(options,state,flag) traveling_salesman_plot(options, ...
+    state,flag,locations);
+
+options = gaoptimset('PopulationType', 'custom','PopInitRange', ...
+    [1;cities]);
+
+options = gaoptimset(options,'CreationFcn',@create_permutations, ...
+    'CrossoverFcn',@crossover_permutation, ...
+    'MutationFcn',@mutate_permutation, ...
+    'PlotFcn', my_plot, ...
+    'Generations',500,'PopulationSize',60, ...
+    'StallGenLimit',200,'Vectorized','on');
+
 numberOfVariables = cities;
-lb = -1.5;
-ub = 0;
-gamultiobj(FitnessFunction,numberOfVariables,[],[],[],[],lb,ub,options);
+[x,fval,reason,output] = ...
+    ga(FitnessFcn,numberOfVariables,[],[],[],[],[],[],[],options);
 
 
 
