@@ -25,3 +25,6 @@ best_distance_init = num2str(best_distance_init);
 fprintf(['Mejor distancia inicial: ' best_distance_init '\n']);
 disp('Mejor ruta inicial:');
 show_route(best);
+for i=1:100;
+    pop = evolvePopulation(pop);
+end;

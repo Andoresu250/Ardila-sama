@@ -1,13 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tsp;
 
-/**
- *
- * @author aarena
- */
+
 public class TSP {
 
    public static void main(String[] args) {

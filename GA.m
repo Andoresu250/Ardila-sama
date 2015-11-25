@@ -29,8 +29,8 @@ end;
 %%Univariable
 times = textread('tiempos.txt');
 
-FitnessFcn = @(x) traveling_salesman_fitness(x,distances);
-
+%FitnessFcn = @(x) traveling_salesman_fitness(x,distances);
+FitnessFcn = @(x) milti_traveling_salesman_fitness(x,distances,times);
 my_plot = @(options,state,flag) traveling_salesman_plot(options, ...
     state,flag,locations);
 
@@ -42,11 +42,13 @@ options = gaoptimset(options,'CreationFcn',@create_permutations, ...
     'MutationFcn',@mutate_permutation, ...
     'PlotFcn', my_plot, ...
     'Generations',500,'PopulationSize',60, ...
+    'PlotFcns',{@gaplotpareto}, ...
     'StallGenLimit',200,'Vectorized','on');
 
 numberOfVariables = cities;
-[x,fval,reason,output] = ...
-    ga(FitnessFcn,numberOfVariables,[],[],[],[],[],[],[],options);
+lb = -1.5;
+ub = 0;
+gamultiobj(FitnessFcn,numberOfVariables,[],[],[],[],lb,ub,options);
 
 
 
