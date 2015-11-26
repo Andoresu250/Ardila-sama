@@ -48,12 +48,12 @@ public class TSP {
         TourManager.addCity(city20);
 
         // Initialize population
-        Population pop = new Population(50, true);
+        Population pop = new Population(500, true);
         System.out.println("Initial distance: " + pop.getFittest().getDistance());
 
         // Evolve population for 100 generations
         pop = GA.evolvePopulation(pop);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 500; i++) {
             pop = GA.evolvePopulation(pop);
         }
 
